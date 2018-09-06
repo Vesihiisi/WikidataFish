@@ -4,7 +4,7 @@ from wikidataStuff.WikidataStuff import WikidataStuff as WDS
 from wikidataStuff import helpers as helpers
 import pywikibot
 
-import importer_utils as utils
+import utils
 
 DATA_DIR = "data"
 

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """Upload a WikidataItem to Wikidata."""
 from os import path
@@ -5,7 +6,7 @@ from os import path
 from wikidataStuff.WikidataStuff import WikidataStuff as WDS
 import pywikibot
 
-import importer_utils as utils
+import utils
 
 
 MAPPING_DIR = "mappings"
@@ -19,6 +20,14 @@ class Uploader(object):
     TEST_ITEM = "Q4115189"
 
     def add_labels(self, target_item, labels):
+        """
+        Add labels and aliases.
+
+        Normally, if the WD item already has a label in $lang
+        and the data object has another one, the new one
+        will be automatically added as an alias. Otherwise
+        (no existing label), it will be added as a label.
+        """
         labels_for_upload = {}
         for label in labels:
             label_content = label['value']
@@ -28,6 +37,7 @@ class Uploader(object):
             labels_for_upload, target_item)
 
     def add_descriptions(self, target_item, descriptions):
+        """Add descriptions to the item."""
         descriptions_for_upload = {}
         for description in descriptions:
             desc_content = description['value']
@@ -37,6 +47,7 @@ class Uploader(object):
             descriptions_for_upload, target_item)
 
     def add_claims(self, wd_item, claims):
+        """Add claims to the item."""
         if wd_item:
             for claim in claims:
                 wd_item.get()
@@ -46,12 +57,15 @@ class Uploader(object):
                 self.wdstuff.addNewClaim(prop, value, wd_item, ref)
 
     def create_new_item(self):
+        """Create a new WD item and return it."""
         return self.wdstuff.make_new_item({}, self.summary)
 
     def get_username(self):
+        """Get username of the account doing the upload."""
         return pywikibot.config.usernames["wikidata"]["wikidata"]
 
     def upload(self):
+        """Upload a single WD item, or enrich an already existing one."""
         if self.data["upload"] is False:
             print("SKIPPING ITEM")
             return
@@ -63,6 +77,13 @@ class Uploader(object):
         self.add_claims(self.wd_item, claims)
 
     def set_wd_item(self):
+        """
+        Determine WD item to manipulate.
+
+        In live mode, if data object has associated WD item,
+        edit it. Otherwise, create a new WD item.
+        In sandbox mode, all edits are done on the WD Sandbox item.
+        """
         if self.live:
             if self.data["wd-item"] is None:
                 self.wd_item = self.create_new_item()
@@ -80,6 +101,13 @@ class Uploader(object):
                  repo,
                  live=False,
                  edit_summary=None):
+        """
+        Initialize an Upload object for a single Nature Area.
+
+        :param data_object: Dictionary of object data
+        :param repo: Data repository of site to work on (Wikidata)
+        :param live: Whether to work on real WD items or in the sandbox
+        """
         self.repo = repo
         self.live = live
         if self.live:
