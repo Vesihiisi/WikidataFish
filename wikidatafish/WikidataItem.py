@@ -12,6 +12,14 @@ DATA_DIR = "data"
 class WikidataItem(object):
 
     def __init__(self, db_row_dict, repository, data_files, existing):
+        """
+        Initiate the object.
+
+        :param db_row_dict: piece of raw to be converted to one WD item
+        :param repository: data repository of site to work on (Wikidata)
+        :param data_files: dictionaries of mappings etc.
+        :param existing: dictionary of existing WD items with certain prop
+        """
         self.repo = repository
         self.existing = existing
         self.wdstuff = WDS(self.repo)
@@ -22,6 +30,12 @@ class WikidataItem(object):
         self.problem_report = {}
 
     def make_q_item(self, qnumber):
+        """
+        Convert a Wikidata Q to a page object.
+
+        :param qnumber: a Q ID, either with or
+        without the 'Q'.
+        """
         return self.wdstuff.QtoItemPage(qnumber)
 
     def make_pywikibot_item(self, value):
@@ -118,21 +132,40 @@ class WikidataItem(object):
         return ref
 
     def associate_wd_item(self, wd_item):
+        """
+        Associate this data object with WD item.
+
+        :param wd_item: Q ID of WD item
+        """
         if wd_item is not None:
             self.wd_item["wd-item"] = wd_item
 
     def set_upload(self, booln):
+        """Set whether this object shall be uploaded to Wikidata."""
         self.wd_item["upload"] = booln
 
     def add_label(self, language, text):
+        """
+        Add a label in certain language.
+
+        :param language: code of language, e.g. "fi"
+        :param text: content of label
+        """
         base = self.wd_item["labels"]
         base.append({"language": language, "value": text})
 
     def add_description(self, language, text):
+        """
+        Add a description in certain language.
+
+        :param language: code of language, e.g. "fi"
+        :param text: content of description
+        """
         base = self.wd_item["descriptions"]
         base.append({"language": language, "value": text})
 
     def construct_wd_item(self):
+        """Create the empty structure of the data object."""
         self.wd_item = {}
         self.wd_item["upload"] = False
         self.wd_item["statements"] = []

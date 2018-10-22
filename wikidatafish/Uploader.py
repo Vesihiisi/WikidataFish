@@ -93,7 +93,7 @@ class Uploader(object):
                 self.wd_item_q = item_q
         else:
             self.wd_item = self.wdstuff.QtoItemPage(ITEMS["sandbox"])
-            self.wd_item_q = ITEMS["sandbox"]
+            self.wd_item_q = self.wd_item.getID()
 
     def __init__(self,
                  data_object,
