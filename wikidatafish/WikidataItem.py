@@ -124,6 +124,14 @@ class WikidataItem(object):
                            pub_date=None,
                            ref_url=None,
                            retrieved_date=None):
+        """
+        Create a 'stated in' referene.
+
+        :param value: content of reference (Q item)
+        :param pub_date: publication date (optional)
+        :param ref_url: reference URL (optional)
+        :param retrieved_date: date when information was retrieved (optional)
+        """
         item_prop = self.props["stated_in"]
         published_prop = self.props["publication_date"]
         published_claim = None
