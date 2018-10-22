@@ -39,6 +39,19 @@ class WikidataItem(object):
         return self.wdstuff.QtoItemPage(qnumber)
 
     def make_pywikibot_item(self, value):
+        """
+        Convert data structure to pywikibot object.
+
+        :param value: content of statement
+        :type value: a string (for text), a string
+                     representing a Q ID (for WD item),
+                     a dictionary
+                     (with either "quantity_value" or
+                     "date_value" as key), a "somevalue"
+                     or "novalue" for special types;
+                     alternatively a single-element
+                     list of any of these.
+        """
         val_item = None
         if isinstance(value, list) and len(value) == 1:
             value = value[0]
@@ -64,6 +77,11 @@ class WikidataItem(object):
         return val_item
 
     def make_statement(self, value):
+        """
+        Make a statement.
+
+        :param value: content of statement
+        """
         if value in ['somevalue', 'novalue']:
             special = True
         else:
@@ -71,11 +89,24 @@ class WikidataItem(object):
         return self.wdstuff.Statement(value, special=special)
 
     def make_qualifier_applies_to(self, value):
+        """
+        Create 'applies to part' qualifier object.
+
+        :param value: what part this applies to (Q item)
+        """
         prop_item = self.props["applies_to_part"]
         target_item = self.wdstuff.QtoItemPage(value)
         return self.wdstuff.Qualifier(prop_item, target_item)
 
     def add_statement(self, prop_name, value, quals=None, ref=None):
+        """
+        Add a statement to the data object.
+
+        :param prop_name: name of property, as stated in mapping file.
+        :param value: content of statement
+        :param qual: qualifier(s) to include
+        :param ref: reference to include
+        """
         base = self.wd_item["statements"]
         prop = self.props[prop_name]
         if quals is None:
