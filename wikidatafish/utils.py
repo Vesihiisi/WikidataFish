@@ -52,11 +52,19 @@ def get_wd_items_using_prop(prop):
     The output is a dictionary of ID's and items
     that looks like this:
     {'4420': 'Q28936211', '2041': 'Q28933898'}
+
+    This has the same role as helpers.fill_cache_wdqs(),
+    meaning it can be deprecated if that gets rebuilt in
+    wdqsLookup in the future.
     """
     items = {}
     print("WILL NOW DOWNLOAD WD ITEMS THAT USE " + prop)
-    query = "SELECT DISTINCT ?item ?value  WHERE {?item p:" + \
-        prop + "?statement. OPTIONAL { ?item wdt:" + prop + " ?value. }}"
+    query = (
+        "SELECT DISTINCT "
+        "?item ?value "
+        "WHERE {?item p:%s ?statement. "
+        "OPTIONAL { ?item wdt:%s ?value. }}"
+    ) % (prop, prop)
     sparql_query = sparql.SparqlQuery()
     data = sparql_query.select(query)
     for x in data:

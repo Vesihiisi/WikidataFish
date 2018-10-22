@@ -30,8 +30,6 @@ class WikidataItem(object):
             value = value[0]
         if utils.string_is_q_item(value):
             val_item = self.make_q_item(value)
-        elif value == "novalue":
-            val_item = value
         elif isinstance(value, dict) and 'quantity_value' in value:
             number = value['quantity_value']
             if 'unit' in value:
@@ -45,10 +43,8 @@ class WikidataItem(object):
             val_item = pywikibot.WbTime(year=date_dict.get("year"),
                                         month=date_dict.get("month"),
                                         day=date_dict.get("day"))
-        elif value == "novalue":
-            #  raise NotImplementedError
-            #  implement Error
-            print("Status: novalue will be added here")
+        elif value in ["somevalue", "novalue"]:
+            val_item = value
         else:
             val_item = value
         return val_item
@@ -138,7 +134,7 @@ class WikidataItem(object):
 
     def construct_wd_item(self):
         self.wd_item = {}
-        self.wd_item["upload"] = True
+        self.wd_item["upload"] = False
         self.wd_item["statements"] = []
         self.wd_item["labels"] = []
         self.wd_item["descriptions"] = []

@@ -11,13 +11,12 @@ import utils
 
 MAPPING_DIR = "mappings"
 PROPS = utils.load_json(path.join(MAPPING_DIR, "properties.json"))
+ITEMS = utils.load_json(path.join(MAPPING_DIR, "items.json"))
 
 SUMMARY_TEST = "test"
 
 
 class Uploader(object):
-
-    TEST_ITEM = "Q4115189"
 
     def add_labels(self, target_item, labels):
         """
@@ -93,8 +92,8 @@ class Uploader(object):
                 self.wd_item = self.wdstuff.QtoItemPage(item_q)
                 self.wd_item_q = item_q
         else:
-            self.wd_item = self.wdstuff.QtoItemPage(self.TEST_ITEM)
-            self.wd_item_q = self.TEST_ITEM
+            self.wd_item = self.wdstuff.QtoItemPage(ITEMS["sandbox"])
+            self.wd_item_q = ITEMS["sandbox"]
 
     def __init__(self,
                  data_object,
