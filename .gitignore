@@ -1,0 +1,14 @@
+*.csv
+*.tsv
+user-config.py
+throttle.ctrl
+__pycache__/
+tests/__pycache__/
+*.py[cod]
+apicache/
+logs/
+*.ctrl
+*.lwp
+*.log
+.tox/
+.coverage
