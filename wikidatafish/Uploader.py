@@ -17,6 +17,12 @@ SUMMARY_TEST = "test"
 
 
 class Uploader(object):
+    """
+    A tool to upload claims to Wikidata items.
+
+    It can either create a new item or fill
+    a pre-determined one.
+    """
 
     def add_labels(self, target_item, labels):
         """

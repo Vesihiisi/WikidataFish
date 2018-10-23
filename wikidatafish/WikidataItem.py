@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""Convert data to a Wikidata item."""
 from wikidataStuff.WikidataStuff import WikidataStuff as WDS
 from wikidataStuff import helpers as helpers
 import pywikibot
@@ -10,6 +11,7 @@ DATA_DIR = "data"
 
 
 class WikidataItem(object):
+    """A converter for a single piece of data to Wikidata format."""
 
     def __init__(self, db_row_dict, repository, data_files, existing):
         """
