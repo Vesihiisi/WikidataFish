@@ -26,6 +26,8 @@ class Uploader(object):
         and the data object has another one, the new one
         will be automatically added as an alias. Otherwise
         (no existing label), it will be added as a label.
+
+        :param target_item: WD item to manipulate
         """
         labels_for_upload = {}
         for label in labels:
@@ -36,7 +38,12 @@ class Uploader(object):
             labels_for_upload, target_item)
 
     def add_descriptions(self, target_item, descriptions):
-        """Add descriptions to the item."""
+        """
+        Add descriptions to the item.
+
+        :param target item: WD item to manipulate
+        :param descriptions: dict of lang:content descriptions
+        """
         descriptions_for_upload = {}
         for description in descriptions:
             desc_content = description['value']
@@ -46,7 +53,12 @@ class Uploader(object):
             descriptions_for_upload, target_item)
 
     def add_claims(self, wd_item, claims):
-        """Add claims to the item."""
+        """
+        Add claims to the item.
+
+        :param wd_item: WD item to manipulate
+        :param claims: list of claims to add
+        """
         if wd_item:
             for claim in claims:
                 wd_item.get()
